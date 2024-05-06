@@ -12,20 +12,21 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package at.rziha.jsaveexam.webpage;
+package at.rziha.jsaveexam.border;
 
-import javax.swing.*;
+import javax.swing.border.AbstractBorder;
 import java.awt.*;
 
-public class BlackedOutWindow extends JFrame {
-    public BlackedOutWindow() {
-        setTitle("Blacked Out");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setUndecorated(true);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+public class RoundedBorder extends AbstractBorder {
+    private int radius;
 
-        setAutoRequestFocus(true);
+    public RoundedBorder(int radius) {
+        this.radius = radius;
+    }
 
-        getContentPane().setBackground(Color.BLACK);
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+        g.setColor(c.getBackground());
+        g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
     }
 }

@@ -14,6 +14,7 @@
  */
 package at.rziha.jsaveexam;
 
+import at.rziha.jsaveexam.border.RoundedBorder;
 import at.rziha.jsaveexam.webpage.BlackedOutWindow;
 import at.rziha.jsaveexam.webpage.WebPageLoader;
 
@@ -62,6 +63,7 @@ public class JSaveExam {
         SwingUtilities.invokeLater(() -> {
             WebPageLoader webPageLoader = new WebPageLoader(finalUrl);
             webPageLoader.setVisible(true);
+            addCloseButton(webPageLoader);
             defaultGraphicsDefault.setFullScreenWindow(webPageLoader);
         });
 
@@ -74,9 +76,25 @@ public class JSaveExam {
                     blackedOutWindow.setLocationByPlatform(true);
                     blackedOutWindow.setLocation(bounds.x, bounds.y);
                     d.setFullScreenWindow(blackedOutWindow);
+
+                    addCloseButton(blackedOutWindow);
+
                     blackedOutWindow.setVisible(true);
                 });
             });
         }
+    }
+
+    private static void addCloseButton(JFrame frame) {
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(e -> System.exit(0));
+        closeButton.setMargin(new Insets(5, 5, 5, 5));
+        closeButton.setBackground(new Color(220, 220, 220));
+        closeButton.setBorder(new RoundedBorder(5));
+
+        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        topBar.setBackground(new Color(220, 220, 220));
+        topBar.add(closeButton);
+        frame.add(topBar, BorderLayout.NORTH);
     }
 }

@@ -20,8 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebView;
 
 import javax.swing.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 
 public class WebPageLoader extends JFrame {
 
@@ -30,6 +28,8 @@ public class WebPageLoader extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        setAutoRequestFocus(true);
 
         JFXPanel fxPanel = new JFXPanel();
 
@@ -42,18 +42,6 @@ public class WebPageLoader extends JFrame {
         });
 
         add(fxPanel);
-
-        addWindowFocusListener((new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-                requestFocus();
-            }
-        }));
 
         Platform.runLater(() -> {
             pack();

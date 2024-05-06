@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id "com.diffplug.spotless" version "6.25.0"
+    id 'org.beryx.jlink' version '2.25.0'
 }
 
 group = 'at.rziha'
@@ -9,11 +11,29 @@ version = '1.0-SNAPSHOT'
 
 javafx {
     version = "22.0.1"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing' ]
+    modules = [ 'javafx.controls', 'javafx.web', 'javafx.swing' ]
 }
 
-sourceCompatibility = '21'
-targetCompatibility = '21'
+spotless {
+    java {
+        target('**/*.java')
+        removeUnusedImports();
+    }
+}
+
+jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = "JSaveExam"
+    }
+}
+
+jlinkZip {
+    group = 'distribution'
+}
+
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 task preBuild {
     println("Running Prebuild")
@@ -26,6 +46,8 @@ task addLicense(type: Exec) {
 
 build.dependsOn preBuild
 preBuild.dependsOn addLicense
+preBuild.dependsOn spotlessApply
+preBuild.dependsOn spotlessCheck
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
