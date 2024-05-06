@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'com.teamdev.jxbrowser' version '1.0.2'
+}
+
+jxbrowser {
+    version '7.38.2'
+}
+
+group = 'at.rziha'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    implementation jxbrowser.crossPlatform
+    implementation jxbrowser.swing
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.32'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+}
